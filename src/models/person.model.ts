@@ -15,29 +15,39 @@ import { EventOrganizer } from './eventOrganizer.model';
 
 @Table({ tableName: 'people' })
 export class Person extends Model {
+
 	@PrimaryKey
 	@Column({
 		type: DataType.UUID,
 		defaultValue: Sequelize.fn('uuid_generate_v4'),
 	})
 	id!: string;
+	
 	@AllowNull(false)
-	@Column
+	@Column({
+		type: DataType.STRING
+	})
 	name!: string;
 
 	@AllowNull(false)
 	@CreatedAt
-	@Column
+	@Column({
+		type: DataType.DATE
+	})
 	createdAt!: Date;
 
 	@AllowNull(false)
 	@UpdatedAt
-	@Column
+	@Column({
+		type: DataType.DATE
+	})
 	updatedAt!: Date;
 
 	@AllowNull(true)
 	@DeletedAt
-	@Column
+	@Column({
+		type: DataType.DATE
+	})
 	deletedAt?: Date;
 
 	@BelongsToMany(() => Event, () => EventOrganizer)

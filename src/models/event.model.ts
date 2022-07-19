@@ -13,56 +13,69 @@ export class Event extends Model {
 	id!: string;
 	
 	@AllowNull(false)
-	@Column
+	@Column({
+		type: DataType.STRING
+	})
 	name!: string;
 
 	@AllowNull(false)
-	@Column
+	@Column({
+		type: DataType.BOOLEAN
+	})
 	isOutside!: boolean;
 
 	@AllowNull(false)
 	@Index('event_location')
-	@Column
+	@Column({
+		type: DataType.STRING
+	})
 	location!: string;
 
 	@Index('event_city')
-	@Column
+	@Column({
+		type: DataType.STRING
+	})
 	city?: string;
 
 	@Index('event_country')
-	@Column
+	@Column({
+		type: DataType.STRING
+	})
 	country?: string;
 
 	@Index('event_remote')
-	@Column
+	@Column({
+		type: DataType.BOOLEAN
+	})
 	remote?: boolean;
 
 	@AllowNull(false)
 	@Index('event_date')
-	@Column
+	@Column({
+		type: DataType.DATE
+	})
 	date!: Date;
 
 	@AllowNull(false)
 	@CreatedAt
-	@Column
+	@Column({
+		type: DataType.DATE
+	})
   createdAt!: Date;
 
 	@AllowNull(false)
   @UpdatedAt
-	@Column
+	@Column({
+		type: DataType.DATE
+	})
   updatedAt!: Date;
 
 	@AllowNull(true)
 	@DeletedAt
-	@Column
-  deletedAt?: Date;
-
-	/*@BelongsTo(() => Person, {
-		foreignKey: 'organizerId',
-		keyType: DataType.UUID,
-		onDelete: 'CASCADE'
+	@Column({
+		type: DataType.DATE
 	})
-	organizer?: Person;*/
+  deletedAt?: Date;
 
 	@BelongsToMany(() => Person, () => EventOrganizer)
 	organizers?: Person[];
