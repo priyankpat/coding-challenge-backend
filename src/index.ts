@@ -1,3 +1,6 @@
-import {start} from './server'
+// Load all the configuration from .env file
+require('dotenv').config();
 
-start()
+import start from './server';
+
+start();
