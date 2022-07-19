@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
 import Sequelize from 'sequelize';
 import { validate } from 'uuid';
-import addDays from '../../utils/addDaysToDate';
 import { cache } from '../connectors';
 import { Event, Person } from '../models';
 import { Weather } from '../services';
 import { logger, validateDateBetweenTwoDates } from '../utils';
+import addDays from '../utils/addDaysToDate';
 
 const Op = Sequelize.Op;
 
