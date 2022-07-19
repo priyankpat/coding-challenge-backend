@@ -1,22 +1,27 @@
-import express from "express"
-import {Server} from "http";
-import {getDBConnection} from "./database";
+import { Server } from 'http';
+import app from './app';
+import { cache, sync } from './connectors';
+import { eventRoutes } from './routes';
+import { environmentConfigs, logger } from './utils';
 
+export default async (): Promise<Server> => {
+	const port = environmentConfigs.serverPort;
 
-export const start = async (): Promise<Server> => new Promise(async (resolve, reject) => {
-    try {
-        const port = 4040
-        const app = express()
-        getDBConnection()
-        app.get('/', (req, res) => {
-            res.send('Hello World!')
-        })
+	// Sync the defined models
+	await sync();
+	await cache.connect();
 
-        const server = app.listen(port, () => {
-            console.log(`Example app listening at http://localhost:${port}`)
-            resolve(server)
-        })
-    } catch (err) {
-        reject(err)
-    }
-})
+	eventRoutes(app);
+
+	app.get('/', (req, res) => {
+		res.json({ message: 'Welcome to the event planner application.' });
+	})
+
+	const server: any = app.listen(port, () => {
+		logger.log('info', 'Running on environment: %s', environmentConfigs.environment);
+		logger.log('info', 'Example app listening at http://localhost:%s', port);
+		return server;
+	});
+
+	return server;
+};
