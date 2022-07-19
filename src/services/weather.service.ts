@@ -1,4 +1,4 @@
-import { environmentConfigs } from "../utils";
+import { environmentConfigs } from '../utils';
 
 const axios = require('axios').default;
 

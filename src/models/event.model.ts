@@ -1,6 +1,6 @@
-import { AllowNull, BelongsToMany, Column, CreatedAt, DataType, DeletedAt, Index, Model, PrimaryKey, Sequelize, Table, UpdatedAt } from "sequelize-typescript";
-import { EventOrganizer } from "./eventOrganizer.model";
-import { Person } from "./person.model";
+import { AllowNull, BelongsToMany, Column, CreatedAt, DataType, DeletedAt, Index, Model, PrimaryKey, Sequelize, Table, UpdatedAt } from 'sequelize-typescript';
+import { EventOrganizer } from './eventOrganizer.model';
+import { Person } from './person.model';
 
 @Table({ tableName: 'events' })
 export class Event extends Model {
@@ -21,24 +21,24 @@ export class Event extends Model {
 	isOutside!: boolean;
 
 	@AllowNull(false)
-	@Index("event_location")
+	@Index('event_location')
 	@Column
 	location!: string;
 
-	@Index("event_city")
+	@Index('event_city')
 	@Column
 	city?: string;
 
-	@Index("event_country")
+	@Index('event_country')
 	@Column
 	country?: string;
 
-	@Index("event_remote")
+	@Index('event_remote')
 	@Column
 	remote?: boolean;
 
 	@AllowNull(false)
-	@Index("event_date")
+	@Index('event_date')
 	@Column
 	date!: Date;
 

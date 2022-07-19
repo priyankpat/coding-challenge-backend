@@ -1,6 +1,6 @@
-import { Column, DataType, ForeignKey, Model, Table } from "sequelize-typescript";
-import { Event } from "./event.model";
-import { Person } from "./person.model";
+import { Column, DataType, ForeignKey, Model, Table } from 'sequelize-typescript';
+import { Event } from './event.model';
+import { Person } from './person.model';
 
 @Table({ tableName: 'event_organizers' })
 export class EventOrganizer extends Model {
