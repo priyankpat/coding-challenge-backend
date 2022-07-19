@@ -1,4 +1,4 @@
-interface WeatherDayForecast {
+export interface WeatherDayForecast {
 	date: string;
 	day: {
 		avgtemp_c: number;
@@ -6,7 +6,7 @@ interface WeatherDayForecast {
 	}
 }
 
-interface WeatherForecast {
+export interface WeatherForecast {
 	forecast: {
 		forecastday: WeatherDayForecast[];
 	}
