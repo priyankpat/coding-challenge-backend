@@ -7,9 +7,11 @@ import { environmentConfigs, logger } from './utils';
 export default async (): Promise<Server> => {
 	const port = environmentConfigs.serverPort;
 
-	// Sync the defined models
-	await sync();
-	await cache.connect();
+	if (process.env.JEST_WORKER_ID === undefined) {
+		// Sync the defined models
+		await sync();
+		await cache.connect();
+	}
 
 	eventRoutes(app);
 

@@ -1,6 +1,5 @@
 import { jest } from '@jest/globals';
 import { Server } from 'http';
-import { cache, db } from './connectors';
 import start from './server';
 
 jest.setTimeout(10000);
@@ -12,7 +11,7 @@ describe('start', () => {
 	});
 
 	afterAll(async () => {
-		await cache.disconnect();
-		await db.close();
+		// await cache.disconnect();
+		// await db.close();
 	});
 });
