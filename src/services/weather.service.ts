@@ -1,3 +1,4 @@
+import { WeatherForecast } from '../types';
 import { environmentConfigs } from '../utils';
 
 const axios = require('axios').default;
