@@ -1,4 +1,8 @@
-import addDays from './addDaysToDate';
+const addDays = (date, dayToAdd) => {
+	const result = new Date(date);
+	result.setDate(result.getDate() + dayToAdd);
+	return result;
+}
 
 const events = [
 	{

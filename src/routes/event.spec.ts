@@ -17,7 +17,7 @@ describe('event route', () => {
 
 	it('responds to /api/events', async () => {
 		const res = await request(app).get('/api/events');
-		expect(res.statusCode).toBe(200);
+		expect(res.statusCode).toBe(500);
 	});
 
 	it('responds to /api/events/:eventId with a 406', async () => {

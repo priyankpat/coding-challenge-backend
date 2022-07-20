@@ -4,7 +4,7 @@ import {
 	Column,
 	CreatedAt,
 	DataType,
-	DeletedAt, Model,
+	DeletedAt, Index, Model,
 	PrimaryKey,
 	Sequelize,
 	Table,
@@ -17,6 +17,7 @@ import { EventOrganizer } from './eventOrganizer.model';
 export class Person extends Model {
 
 	@PrimaryKey
+	@Index('person_id')
 	@Column({
 		type: DataType.UUID,
 		defaultValue: Sequelize.fn('uuid_generate_v4'),

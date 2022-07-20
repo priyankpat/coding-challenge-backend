@@ -6,6 +6,7 @@ import { Person } from './person.model';
 export class Event extends Model {
 	
 	@PrimaryKey
+	@Index('event_id')
 	@Column({
 		type: DataType.UUID,
 		defaultValue: Sequelize.fn('uuid_generate_v4'),

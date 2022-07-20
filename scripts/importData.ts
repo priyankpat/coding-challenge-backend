@@ -5,7 +5,6 @@ import data from '../data/data.json';
 import { sync } from '../src/connectors';
 import { Event, EventOrganizer, Person } from '../src/models';
 import { logger } from '../src/utils';
-import addDays from '../utils/addDaysToDate';
 
 interface IOrganizer {
 	id?: string;
@@ -19,6 +18,12 @@ interface IEvent {
 	location: string;
 	date: number;
 	organizer: IOrganizer;
+}
+
+const addDays = (date: Date, dayToAdd: number): Date => {
+	const result = new Date(date);
+	result.setDate(result.getDate() + dayToAdd);
+	return result;
 }
 
 // Import all the unique Organizers into the table
