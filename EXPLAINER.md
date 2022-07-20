@@ -28,3 +28,25 @@ In order to speed the read operations and reduce the load as well as keeping the
 ### Testing
 Basic unit testing has been implemented to test utility methods, routes, and environment variables. There is a lot of room for improvement as testing goes, such as assing end-to-end testing to validate all the functional logic. A simple CI has been configured to run tests during each commit in order to ensure that any changes to the code is validated by test cases for consistenct behvaiour. 
 
+### Validation
+Basic validation for all the parameters have been implemented though I might be missing a few more validations due to time constaint. A standardize message can be improved upon as well as the response codes.
+
+## Logger
+A logger library called Winston is being utilized in this demo, which gives us the flexibility of logging it to console as well as to various transports such as Amazon CloudWatch, Amazon SNS, Google BigQuery, Graylog, Sentry, etc. This will provide us with a visibility during a production deployment. 
+
+---
+## Stress Test
+A stress test was performed using JMeter to determine the type of load this backend can handle. The result seem to indicate that on average the backend is able to handle ~100 requests/sec based on the throughput value of ~6k/minute for `/api/events` endpoint. As for `/api/events/{eventId}` endpoint, the result is slightly lower with around ~99 requests/sec based on the throughput value of ~5967 requests/minute.
+
+#### Stress Test for `/api/events`
+![Stress Test](stress-test/events-list-result.png)
+
+#### Stress Test for `/api/events/{eventId}`
+![Stress Test](stress-test/event-details-result.png)
+
+---
+
+### Screenshots
+![ScreenShot](docs/ss-1.png)
+![ScreenShot](docs/ss-2.png)
+![ScreenShot](docs/ss-3.png)
