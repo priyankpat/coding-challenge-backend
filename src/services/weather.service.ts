@@ -8,9 +8,6 @@ export class Weather {
 		const dateToSearch = date.toISOString().split('T')[0];
 		const forecastResult = await this.getForecast(city);
 
-		console.log(dateToSearch);
-		console.log(forecastResult.forecast.forecastday);
-
 		const forecastForDate = forecastResult.forecast.forecastday.find((day) => day.date === dateToSearch);
 
 		if (!forecastForDate) {

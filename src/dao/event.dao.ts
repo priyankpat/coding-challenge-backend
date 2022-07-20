@@ -27,6 +27,22 @@ const getPagingData = (data: any, page: any, limit: number) => {
 export const allEvents = async (req: Request, res: Response) => {
 	const { page, size, from, until } = req.query;
 
+	const dateRegexp = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/;
+
+	// Validate if from param is an ISO date string
+	if (from && typeof from === 'string' && !from.match(dateRegexp)) {
+		return res.status(406).send({
+			message: 'Invalid `from` date value specified.',
+		});
+	}
+
+	// Validate if until param is an ISO date string
+	if (until && typeof until === 'string' && !until.match(dateRegexp)) {
+		return res.status(406).send({
+			message: 'Invalid `until` date value specified.',
+		});
+	}
+
 	const startDate = from ? new Date(from as string) : new Date();
 	const endDate = until ? new Date(until as string) : null;
 
@@ -65,13 +81,14 @@ export const allEvents = async (req: Request, res: Response) => {
 				})),
 			};
 		});
+
 		const response = getPagingData(
 			{ count: events.count, rows: cleanedData },
 			page,
 			limit
 		);
 
-		res.send(response);
+		return res.send(response);
 	} catch (ex: any) {
 		logger.error('Failed to query the events', ex);
 		res.status(500).send({
@@ -84,30 +101,41 @@ export const eventDetails = async (req: Request, res: Response) => {
 	const eventId = req.params.eventId;
 
 	if (!eventId) {
-		return res.status(404).send({
+		return res.status(406).send({
 			message: 'event id is not specified',
 		});
 	}
 
 	if (!validate(eventId)) {
-		return res.status(404).send({
+		return res.status(406).send({
 			message: 'event id is not a valid format',
 		});
 	}
 
 	let event = null,
 		forecast = null;
-	const searchCache = await cache.get(eventId);
-	if (searchCache) {
-		event = JSON.parse(searchCache);
-		logger.log('info', `Found ${eventId} in cache`);
-	} else {
-		logger.log('info', `Event ${eventId} not found in cache`);
-		event = await Event.findOne({ where: { id: eventId }, include: [Person] });
 
-		if (event) {
-			await cache.set(eventId, JSON.stringify(event));
+	try {
+		const searchCache = await cache.get(eventId);
+		if (searchCache) {
+			event = JSON.parse(searchCache);
+			logger.log('info', `Found ${eventId} in cache`);
+		} else {
+			logger.log('info', `Event ${eventId} not found in cache`);
+			event = await Event.findOne({
+				where: { id: eventId },
+				include: [Person],
+			});
+
+			if (event) {
+				await cache.set(eventId, JSON.stringify(event));
+			}
 		}
+	} catch (ex) {
+		logger.error(`Failed to query event for id ${eventId}`, ex);
+		return res.status(500).send({
+			message: `something went wrong when trying to get the event details.`
+		})
 	}
 
 	if (!event) {
@@ -119,7 +147,11 @@ export const eventDetails = async (req: Request, res: Response) => {
 	if (
 		event.isOutside &&
 		event.city &&
-		validateDateBetweenTwoDates(new Date(), addDays(new Date(), 7), new Date(event.date))
+		validateDateBetweenTwoDates(
+			new Date(),
+			addDays(new Date(), 7),
+			new Date(event.date)
+		)
 	) {
 		const weather = new Weather();
 		try {
