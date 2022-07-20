@@ -134,8 +134,8 @@ export const eventDetails = async (req: Request, res: Response) => {
 	} catch (ex) {
 		logger.error(`Failed to query event for id ${eventId}`, ex);
 		return res.status(500).send({
-			message: `something went wrong when trying to get the event details.`
-		})
+			message: `something went wrong when trying to get the event details.`,
+		});
 	}
 
 	if (!event) {
