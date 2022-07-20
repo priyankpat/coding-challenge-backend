@@ -26,7 +26,7 @@ This demo contains 3 main tables, `event`, `people` and `event_organizers` based
 In order to speed the read operations and reduce the load as well as keeping the scalabity in mind, as most of the operations in the database will be reads by loading events, I decided to add a small redis layer. This cache layer is being utilized by an endpoint that fetches the event information in order to keep the users from querying the database with same information over and over again. It would be a good idea to cache the results of the weather service as well but it is not implemented due to the lack of time.
 
 ### Testing
-Basic unit testing has been implemented to test utility methods, routes, and environment variables. There is a lot of room for improvement as testing goes, such as adding end-to-end testing to validate all the functional logic. A simple CI has been configured to run tests during each commit in order to ensure that any changes to the code is validated by test cases for consistenct behvaiour. 
+Basic unit testing has been implemented to test utility methods, routes, and environment variables. There is a lot of room for improvement as testing goes, such as adding end-to-end testing to validate all the functional logic. A simple CI has been configured to run tests during each commit in order to ensure that any changes to the code is validated by test cases for consistent behvaiour. 
 
 ### Validation
 Basic validation for all the parameters have been implemented though I might be missing a few more validations due to time constaint. A standardize message can be improved upon as well as the response codes.
